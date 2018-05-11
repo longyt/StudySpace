@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link href="plugs/bootstarp/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script src="plugs/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="plugs/angular/angular.js" type="text/javascript"></script>
+<script src="plugs/angular/angular-route.min.js" type="text/javascript"></script>
+<script src="plugs/angular/angular-ui-router.js" type="text/javascript"></script>
+<script src="plugs/bootstarp/bootstrap.min.js" type="text/javascript"></script>
+<script src="test/indexcontroller.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    var app=angular.module('app',[]);
+
+    /*    angular.module('app',[]).config(['$stateProvider','$urlRouterProvider',function ($stateProvider,$urlRouterProvider) {
+            $urlRouterProvider.otherwise("/study01");
+                console.log("bbb");
+                $stateProvider.state('home.list',{
+                    url: '/home/list',
+                    templateUrl: 'index.html',
+                    controller: 'stu',
+                });
+        }]);*/
+    angular.module('app',[])
+        .controller('stu',function ($scope) {
+            console.log("aaa");
+            $scope.searchh = function () {
+                $.ajax({
+                    type:'POST',
+                    dataType:'json',
+                    contentType:'application/json;charset=UTF-8',
+                    url:'/study01/stu/select.action',
+                    success:function (result) {
+                      $scope.stuList=result
+                        console.log(result)
+                    }
+                });
+            }
+            /*$scope.sites = [
+
+                {name:'百度',path:'www.baidu.com'},
+
+                {name:'新浪',path:'www.sina.com.cn'},
+
+                {name:'腾讯',path:'www.qq.com'}
+
+            ]*/
+           $scope.searchh();
+        });
+</script>
+
+<body >
+<div ng-app="app">
+    <div>
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a>Home</a></li>
+            <li role="presentation"><a href="#">Profile</a></li>
+            <li role="presentation"><a href="#">Messages</a></li>
+        </ul>
+        <div class="table-div"  ng-controller="stu">
+            <table class="table table-striped b-t b-light text-center table-01">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>性别</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in stuList.data">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.age}}</td>
+                    <td>{{item.sex}}</td>
+                </tr>
+                </tbody>
+            </table>
+            {{stuList.data}}
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+
+<style type="text/css">
+    .table-01{
+        width: 89%;
+    }
+    .table-div{
+        width: 100%;
+        margin: 0 auto;
+    }
+</style>
+
+
+</html>

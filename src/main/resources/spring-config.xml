@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+   		">
+
+
+    <!-- spring的属性加载器，加载properties文件中的属性 -->
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="locations">
+                <list>
+                    <value>classpath*:db.properties</value>
+                </list>
+            </property>
+        <property name="ignoreResourceNotFound" value="true"></property>
+    </bean>
+    <!-- 自动扫描 排除过滤controller的扫描 -->
+    <context:component-scan base-package="com.lianbi">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+    </context:component-scan>
+
+    <!-- 配置数据源_-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name = "url" value = "${jdbc.url}" ></property>
+        <property name="username" value="${jdbc.user}"></property>
+        <property name="password" value="${jdbc.pass}"></property>
+    </bean>
+
+    <!-- 配置 sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"></property>
+            <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+            <property name="mapperLocations" value="classpath:com/lianbi/mapper/xml/*.xml"></property>
+            <property name="globalConfig">
+                    <bean class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+                            <property name="idType" value="3"></property>
+                            <property name="dbColumnUnderline" value="true"></property>
+                            <property name="sqlInjector">
+                                <bean class="com.baomidou.mybatisplus.mapper.AutoSqlInjector"/>
+                            </property>
+                    </bean>
+            </property>
+    </bean>
+
+    <!-- 配置 mapper 扫描器-->
+    <bean id="scannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="**.mapper*"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!--<bean id="StuMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+        <property name="mapperInterface" value="com.lianbi.mapper.StuMapper"></property>
+    </bean>-->
+
+    <!-- 配置事物管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+            <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"></tx:annotation-driven>
+
+
+
+
+</beans>
