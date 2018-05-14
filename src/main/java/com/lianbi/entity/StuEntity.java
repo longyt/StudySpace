@@ -12,7 +12,7 @@ public class StuEntity {
      *  id
      */
     @TableId(value = "id")
-    private Integer id;
+    private String  id;
 
     /**
      * 姓名
@@ -35,12 +35,6 @@ public class StuEntity {
     public StuEntity() {
     }
 
-    public StuEntity(Integer id, String name, String sex, Integer age) {
-        this.id = id;
-        this.name = name;
-        this.sex = sex;
-        this.age = age;
-    }
 
     public StuEntity(String name, String sex, Integer age) {
         this.name = name;
@@ -48,11 +42,11 @@ public class StuEntity {
         this.age = age;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

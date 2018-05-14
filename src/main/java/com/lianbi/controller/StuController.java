@@ -46,7 +46,9 @@ public class StuController extends BaseController {
 
     @RequestMapping("/insert.action")
     public void InsertStu(HttpServletResponse response){
-        StuEntity stuEntity=new StuEntity("jkk","男",22);
+        logger.info("insert");
+        StuEntity stuEntity=new StuEntity("ok","女",92);
+
         if (StringUtils.isEmpty(stuEntity)){
             logger.info(" ===   StuEntity 不能为空 ");
         }
@@ -54,5 +56,25 @@ public class StuController extends BaseController {
         logger.info(" === StuEntity   添加成功   ");
         this.outWrite(response,new ResultDTO(stuEntity));
     }
+
+    @RequestMapping("/update.action")
+    public void updateStu(HttpServletResponse response){
+        logger.info("update");
+        StuEntity stuEntity=new StuEntity();
+        stuEntity.setId("11");
+        stuEntity.setName("aaa");
+        stuEntity.setSex("女");
+        stuEntity.setAge(89);
+        boolean b = stuService.updateById(stuEntity);
+        System.out.println(b);
+        if(!b){
+            logger.info(" ===   更新失败 ");
+        }
+        logger.info(" ===   更新成功 ");
+        this.outWrite(response,new ResultDTO(stuEntity));
+    }
+
+
+
 
 }
