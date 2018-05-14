@@ -1,6 +1,5 @@
 package com.lianbi.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.lianbi.core.ResultDTO;
 import com.lianbi.core.base.BaseController;
 import com.lianbi.entity.StuEntity;
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/stu")
@@ -27,11 +24,13 @@ public class StuController extends BaseController {
     StuService stuService;
 
     @RequestMapping(value = "/select.action")
-    public void   SelectStu(HttpServletResponse response){
+    @ResponseBody
+    public ResultDTO   SelectStu(HttpServletResponse response){
+        ResultDTO resultDTO = null;
         try {
             logger.info(" ===     年轻人我进来了   ==="+stuService.selectStu().size());
             List<StuEntity> stuEntities = stuService.selectStu();
-            ResultDTO resultDTO = new ResultDTO(stuEntities);
+            resultDTO = new ResultDTO(stuEntities);
             logger.info(resultDTO.getResMsg() +"  ===  "+resultDTO.getResCode()+ "===   "+resultDTO.getResMsgType());
             this.outWrite(response,resultDTO);
         }catch (Exception e){
@@ -45,7 +44,7 @@ public class StuController extends BaseController {
         String s = JSON.toJSONString(map);
         return s;
         */
-
+        return  resultDTO;
     }
 
 }
