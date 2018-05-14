@@ -4,4 +4,8 @@
     <select id="selectStu" resultType="com.lianbi.entity.StuEntity">
         SELECT ID,NAME,SEX,AGE FROM STU WHERE 1=1;
     </select>
+
+    <select id="insert" parameterType="com.lianbi.entity.StuEntity">
+        INSERT INTO stu(NAME,sex,age) VALUES(#{name},#{sex},#{age});
+    </select>
 </mapper>

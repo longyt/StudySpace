@@ -42,6 +42,12 @@ public class StuEntity {
         this.age = age;
     }
 
+    public StuEntity(String name, String sex, Integer age) {
+        this.name = name;
+        this.sex = sex;
+        this.age = age;
+    }
+
     public Integer getId() {
         return id;
     }

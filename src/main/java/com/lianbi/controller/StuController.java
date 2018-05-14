@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,13 +39,20 @@ public class StuController extends BaseController {
             logger.error("    ===  controller error "+e);
             logger.info("  ==   controller Exception");
         }
-        logger.info("  ==  controller   处理完成  ");
-       /* Map<String ,Object> map=new HashMap<>();
-        map.put("data",stuEntities);
-        String s = JSON.toJSONString(map);
-        return s;
-        */
-        return  resultDTO;
+            logger.info("  ==  controller   处理完成  ");
+
+            return  resultDTO;
+    }
+
+    @RequestMapping("/insert.action")
+    public void InsertStu(HttpServletResponse response){
+        StuEntity stuEntity=new StuEntity("jk","男",22);
+        if (StringUtils.isEmpty(stuEntity)){
+            logger.info(" ===   StuEntity 不能为空 ");
+        }
+        stuService.insert(stuEntity);
+        logger.info(" === StuEntity   添加成功   ");
+        this.outWrite(response,new ResultDTO(stuEntity));
     }
 
 }
