@@ -70,10 +70,6 @@ public class ResultDTO<T> implements Serializable {
         this.record = record;
     }
 
-    public ResultDTO(String resCode, String resMsg) {
-        this.resCode = resCode;
-        this.resMsg = resMsg;
-    }
 
     public ResultDTO(String resCode, String resMsg, String resMsgType) {
         this.resCode = resCode;
@@ -83,6 +79,10 @@ public class ResultDTO<T> implements Serializable {
     //  失败
     public static <T>ResultDTO<T> Fail(String resMsg){
             return new ResultDTO(FAIL,resMsg,"3");
+    }
+    //成功
+    public static <T>ResultDTO<T> Success(String resMsg){
+        return new ResultDTO(SUCCESS,resMsg,"1");
     }
 
     /**
