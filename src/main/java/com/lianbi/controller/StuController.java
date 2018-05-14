@@ -46,7 +46,7 @@ public class StuController extends BaseController {
 
     @RequestMapping("/insert.action")
     public void InsertStu(HttpServletResponse response){
-        StuEntity stuEntity=new StuEntity("jk","男",22);
+        StuEntity stuEntity=new StuEntity("jkk","男",22);
         if (StringUtils.isEmpty(stuEntity)){
             logger.info(" ===   StuEntity 不能为空 ");
         }
