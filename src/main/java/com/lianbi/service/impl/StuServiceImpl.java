@@ -52,7 +52,7 @@ public class StuServiceImpl extends ServiceImpl<StuMapper,StuEntity> implements 
             if(allcount<StuList.size()){
                 logger.info("我在这里");
                 logger.info(JSON.toJSONString(StuList.subList(allcount,StuList.size())));
-                int insert = sqlSession.insert("com.lianbi.mapper.StuMapper.InsertDate", StuList.subList(allcount, StuList.size()));
+                int insert = sqlSession.insert("com.lianbi.mapper.StuMapper.InsertDate",   StuList.subList(allcount, StuList.size()));
                 logger.info(String.valueOf(insert));
                 //logger.info(JSON.toJSONString(StuList.subList(allcount,StuList.size())));
                 sqlSession.commit();
