@@ -76,11 +76,11 @@ public class ResultDTO<T> implements Serializable {
         this.resMsg = resMsg;
         this.resMsgType = resMsgType;
     }
-    //  失败
+    //  返回失败结果信息
     public static <T>ResultDTO<T> Fail(String resMsg){
             return new ResultDTO(FAIL,resMsg,"3");
     }
-    //成功
+    // 返回成功结果信息
     public static <T>ResultDTO<T> Success(String resMsg){
         return new ResultDTO(SUCCESS,resMsg,"1");
     }
