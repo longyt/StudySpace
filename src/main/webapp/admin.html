@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="/plugs/bootstarp/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/plugs/bootstarp/sidebar.less" rel="stylesheet/less" type="text/css">
+    <link href="/plugs/bootstarp/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script src="/plugs/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="/plugs/angular/angular.js" type="text/javascript"></script>
     <script src="/plugs/angular/angular-route.min.js" type="text/javascript"></script>
     <script src="/plugs/angular/angular-ui-router.js" type="text/javascript"></script>
     <script src="/plugs/bootstarp/bootstrap.min.js" type="text/javascript"></script>
     <script src="/test/indexcontroller.js" type="text/javascript"></script>
-    <script src="/plugs/bootstarp/dropdown.js" type="text/javascript"></script>
-
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -24,100 +22,136 @@
         </div>
     </div>
 </nav>
-    <div id="wrapper">
-        <div class="overlay"></div>
 
-        <!-- Sidebar -->
-        <nav class="navbar navbar-default navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-            <ul class="nav sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-
-                    </a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-folder"></i> Page one</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-file-o"></i> Second page</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-cog"></i> Third page</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-bank"></i> Page four</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-dropbox"></i> Page 5</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-twitter"></i> Last page</a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /#sidebar-wrapper -->
+<div id="sidebar" class="sidebar-nav side_div_style">
+    <form class="search form-inline">
+        <input type="text"  class="form-control" style="width: 175px;" placeholder="搜索  ...">
+    </form>
 
 
-        <!-- /#page-content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
+</div>
 
 </body>
 <style>
-    .top_context{
+    .top_context {
         font-size: 14px;
         color: #5bc0de;
-    }
-    #sidebar-wrapper{
-        width: 350px;
-        margin-top: 53px;
         height: 100%;
+    }
+
+    .sidediv_style {
+        width: 173px;
+        margin-top: 13px;
+    }
+
+    .icon_style {
+        width: 20px;
+        margin-left: 10px;
+    }
+
+    .a_style {
+        text-decoration-line: none;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        width: 200px;
+        padding-right: 59px;
+        line-height: 20px;
+    }
+
+    .ul_style {
+        width: 173px;
+    }
+
+    .li_style {
+        width: 173px;
+    }
+
+    .li_a_style {
+        margin-left: 10px;
+    }
+
+    .ul_style li a:hover {
+        background-color: #ffff00;
+    }
+
+    a:link {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    a:visited {
+        text-decoration: none;
+        cursor: pointer
+    }
+
+    a:active {
+        text-decoration: none;
+        cursor: pointer
+    }
+
+    a:hover {
+        text-decoration: none;
+        cursor: pointer
+    }
+
+    .side_div_style {
+        margin-top: -18px;
+        width: 175px;
+        height: -webkit-fill-available;
+        background-color: #f7f7f7;
     }
 </style>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var trigger = $('.hamburger'),
-            overlay = $('.overlay'),
-            isClosed = false;
-
-        trigger.click(function () {
-            hamburger_cross();
-        });
-
-        function hamburger_cross() {
-
-            if (isClosed == true) {
-                overlay.hide();
-                trigger.removeClass('is-open');
-                trigger.addClass('is-closed');
-                isClosed = false;
-            } else {
-                overlay.show();
-                trigger.removeClass('is-closed');
-                trigger.addClass('is-open');
-                isClosed = true;
+        $.ajax({
+            url: "/options/list.action",
+            dataType: "json",
+            success: function (data) {
+                console.log(data.options);
+                $.each(data.options,function (k,v) {
+                    $("#sidebar").append("" +
+                        "<div class=\"sidediv_style\">\n" +
+                        " <a href=\"#menu_"+v.optionsID+"\" onclick=\"SelectOptions(this,"+v.optionsID+")\"  class=\"nav-header a_style\" data-toggle=\"collapse\"><i\n" +
+                        "                class=\"glyphicon glyphicon-book icon_style\"></i>"+v.optionsName+"</a>\n" +
+                        "</div>\n" +
+                        "<ul id=\"menu_"+v.optionsID+"\" class=\"nav nav-list collapse ul_style\">\n" +
+                        "       \n" +
+                        "</ul>");
+                })
             }
-        }
-
-        $('[data-toggle="offcanvas"]').click(function () {
-            $('#wrapper').toggleClass('toggled');
         });
+
+
     });
+
+    function SelectOptions(_this,value) {
+        var f = true;
+        $.ajax({
+            url:"/optionsitem/list.action",
+            dataType:"json",
+            method:"POST",
+            data:{"optionItemPid":value},
+            success:function (data) {
+                    if(data.resCode=="00000"){
+                        $.each(data.optionsitem,function (k, v) {
+                            f=true;//允许添加值
+                            $("#menu_"+value).each(function () {
+                                $(this).find("li").each(function () {
+                                    console.log($(this).text());
+                                    if(v.optionItemName==$(this).text()){
+                                        f=false;//禁止添加
+                                        return;
+                                    }
+                                })
+                            });
+                            if(f){
+                                $("#menu_"+value).append("<li class=\"li_style\"><a href=\"\" class=\"li_a_style\">"+v.optionItemName+"</a></li>");
+                            }
+                        });
+                    }
+            }
+        });
+    }
 </script>
 </html>
