@@ -25,7 +25,7 @@
 
 <div id="sidebar" class="sidebar-nav side_div_style">
     <form class="search form-inline">
-        <input type="text"  class="form-control" style="width: 175px;" placeholder="搜索  ...">
+        <input type="text" class="form-control" style="width: 175px;" placeholder="搜索  ...">
     </form>
 
 
@@ -109,13 +109,13 @@
             dataType: "json",
             success: function (data) {
                 console.log(data.options);
-                $.each(data.options,function (k,v) {
+                $.each(data.options, function (k, v) {
                     $("#sidebar").append("" +
                         "<div class=\"sidediv_style\">\n" +
-                        " <a href=\"#menu_"+v.optionsID+"\" onclick=\"SelectOptions(this,"+v.optionsID+")\"  class=\"nav-header a_style\" data-toggle=\"collapse\"><i\n" +
-                        "                class=\"glyphicon glyphicon-book icon_style\"></i>"+v.optionsName+"</a>\n" +
+                        " <a href=\"#menu_" + v.optionsID + "\" onclick=\"SelectOptions(this," + v.optionsID + ")\"  class=\"nav-header a_style\" data-toggle=\"collapse\"><i\n" +
+                        "                class=\"glyphicon glyphicon-book icon_style\"></i>" + v.optionsName + "</a>\n" +
                         "</div>\n" +
-                        "<ul id=\"menu_"+v.optionsID+"\" class=\"nav nav-list collapse ul_style\">\n" +
+                        "<ul id=\"menu_" + v.optionsID + "\" class=\"nav nav-list collapse ul_style\">\n" +
                         "       \n" +
                         "</ul>");
                 })
@@ -125,31 +125,31 @@
 
     });
 
-    function SelectOptions(_this,value) {
+    function SelectOptions(_this, value) {
         var f = true;
         $.ajax({
-            url:"/optionsitem/list.action",
-            dataType:"json",
-            method:"POST",
-            data:{"optionItemPid":value},
-            success:function (data) {
-                    if(data.resCode=="00000"){
-                        $.each(data.optionsitem,function (k, v) {
-                            f=true;//允许添加值
-                            $("#menu_"+value).each(function () {
-                                $(this).find("li").each(function () {
-                                    console.log($(this).text());
-                                    if(v.optionItemName==$(this).text()){
-                                        f=false;//禁止添加
-                                        return;
-                                    }
-                                })
-                            });
-                            if(f){
-                                $("#menu_"+value).append("<li class=\"li_style\"><a href=\"\" class=\"li_a_style\">"+v.optionItemName+"</a></li>");
-                            }
+            url: "/optionsitem/list.action",
+            dataType: "json",
+            method: "POST",
+            data: {"optionItemPid": value},
+            success: function (data) {
+                if (data.resCode == "00000") {
+                    $.each(data.optionsitem, function (k, v) {
+                        f = true;//允许添加值
+                        $("#menu_" + value).each(function () {
+                            $(this).find("li").each(function () {
+                                console.log($(this).text());
+                                if (v.optionItemName == $(this).text()) {
+                                    f = false;//禁止添加
+                                    return;
+                                }
+                            })
                         });
-                    }
+                        if (f) {
+                            $("#menu_" + value).append("<li class=\"li_style\"><a href=\"\" class=\"li_a_style\">" + v.optionItemName + "</a></li>");
+                        }
+                    });
+                }
             }
         });
     }
