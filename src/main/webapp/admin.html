@@ -110,48 +110,23 @@
             success: function (data) {
                 console.log(data.options);
                 $.each(data.options, function (k, v) {
-                    $("#sidebar").append("" +
-                        "<div class=\"sidediv_style\">\n" +
-                        " <a href=\"#menu_" + v.optionsID + "\" onclick=\"SelectOptions(this," + v.optionsID + ")\"  class=\"nav-header a_style\" data-toggle=\"collapse\"><i\n" +
-                        "                class=\"glyphicon glyphicon-book icon_style\"></i>" + v.optionsName + "</a>\n" +
-                        "</div>\n" +
-                        "<ul id=\"menu_" + v.optionsID + "\" class=\"nav nav-list collapse ul_style\">\n" +
-                        "       \n" +
-                        "</ul>");
+                        if(v.optionsPid=="0"){
+                            $("#sidebar").append("" +
+                                "<div class=\"sidediv_style\">\n" +
+                                " <a href=\"#menu_" + v.optionsID + "\"  class=\"nav-header a_style\" data-toggle=\"collapse\"><i\n" +
+                                "                class=\"glyphicon glyphicon-book icon_style\"></i>" + v.optionsName + "</a>\n" +
+                                "</div>\n" +
+                                "<ul id=\"menu_" + v.optionsID + "\" class=\"nav nav-list collapse ul_style\">\n" +
+                                "       \n" +
+                                "</ul>");
+                        }else{
+                            $("#menu_" + v.optionsPid).append("<li class=\"li_style\"><a href=\"\" class=\"li_a_style\">" + v.optionsName + "</a></li>");
+                        }
                 })
             }
         });
 
-
     });
 
-    function SelectOptions(_this, value) {
-        var f = true;
-        $.ajax({
-            url: "/optionsitem/list.action",
-            dataType: "json",
-            method: "POST",
-            data: {"optionItemPid": value},
-            success: function (data) {
-                if (data.resCode == "00000") {
-                    $.each(data.optionsitem, function (k, v) {
-                        f = true;//允许添加值
-                        $("#menu_" + value).each(function () {
-                            $(this).find("li").each(function () {
-                                console.log($(this).text());
-                                if (v.optionItemName == $(this).text()) {
-                                    f = false;//禁止添加
-                                    return;
-                                }
-                            })
-                        });
-                        if (f) {
-                            $("#menu_" + value).append("<li class=\"li_style\"><a href=\"\" class=\"li_a_style\">" + v.optionItemName + "</a></li>");
-                        }
-                    });
-                }
-            }
-        });
-    }
 </script>
 </html>

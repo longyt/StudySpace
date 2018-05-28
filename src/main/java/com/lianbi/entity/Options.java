@@ -9,6 +9,8 @@ public class Options {
 
     private String OptionsName;
 
+    private String OptionsPid;
+
     public String getOptionsID() {
         return OptionsID;
     }
@@ -23,5 +25,13 @@ public class Options {
 
     public void setOptionsName(String optionsName) {
         OptionsName = optionsName;
+    }
+
+    public String getOptionsPid() {
+        return OptionsPid;
+    }
+
+    public void setOptionsPid(String optionsPid) {
+        OptionsPid = optionsPid;
     }
 }
