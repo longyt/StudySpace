@@ -12,7 +12,8 @@
     <script src="/test/indexcontroller.js" type="text/javascript"></script>
 </head>
 <body>
-    <input type="text" class="form-control" value="${request.getServletContext}"/>
+    <button class="form-control">aa</button>
+    <input type="text" class="form-control" onkeyup="Test(this)" value=""/>
 </body>
     <script type="text/javascript">
             $(function () {
@@ -27,6 +28,14 @@
                     }
                 });
             })
+
+        function Test(obj) {
+            console.log(obj.value);
+            obj.value=obj.value.replace(/\d+\.\d{3}/g,function (params) {
+                alert("aa"+params.substr(0,params.indexOf(".")+3));
+                return value.substr(0,params.indexOf(".")+3);
+            });
+        }
     </script>
 
 </html>

@@ -1,5 +1,6 @@
 package com.lianbi.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lianbi.core.ModelMap;
 import com.lianbi.entity.Options;
 import com.lianbi.service.OptionsService;
@@ -33,7 +34,7 @@ public class OptionsController {
             modelMap.put("resMsg","查无数据");
             return modelMap;
         }
-        logger.info(logInfo+"-数据查询完成");
+        logger.info(logInfo+"-数据查询完成"+JSON.toJSONString(selectoptions));
         modelMap.put("resCode","00000");
         modelMap.put("options",selectoptions);
         return modelMap;
