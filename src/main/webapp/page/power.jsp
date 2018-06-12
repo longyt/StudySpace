@@ -70,9 +70,9 @@
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <c:forEach items="${result}" var="item" varStatus="powerindex">
+                        <c:forEach items="${page.results}" var="item" varStatus="powerindex">
                         <tbody>
-                        <tr >
+                        <tr>
                             <td>${powerindex.index+1}</td>
                             <td>${item.optionsID}</td>
                             <td>${item.optionsName}</td>
@@ -87,7 +87,8 @@
                         </tbody>
                         </c:forEach>
                     </table>
-
+                        <!-- 分页显示 -->
+                        <c:out value="${page.pageStr}" escapeXml="false"></c:out>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ package com.lianbi.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.lianbi.core.ModelMap;
+import com.lianbi.core.Page;
 import com.lianbi.entity.Power;
 import com.lianbi.service.PowerService;
 import org.slf4j.Logger;
@@ -43,6 +44,8 @@ public class PowerController {
     @RequestMapping("/powerlist.action")
     public String select(org.springframework.ui.ModelMap modelMap){
         String logInfo="权限管理";
+
+        Page<Power> page=new Page();
         modelMap.put("resCode","00001");
         List<Power> powerList = powerService.selectoptions(logInfo);
         if(powerList==null){
@@ -51,8 +54,9 @@ public class PowerController {
             modelMap.put("resMsg","查无数据");
             return "/page/error";
         }
+        page.setResults(powerList);
         modelMap.put("resCode","00000");
-        modelMap.put("result",powerList);
+        modelMap.put("page",page);
         return "/page/power";
     }
 
