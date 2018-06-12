@@ -1,10 +1,9 @@
 package com.lianbi.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.lianbi.controller.OptionsController;
-import com.lianbi.entity.Options;
-import com.lianbi.mapper.OptionsMapper;
-import com.lianbi.service.OptionsService;
+import com.lianbi.entity.Power;
+import com.lianbi.mapper.PowerMapper;
+import com.lianbi.service.PowerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 @Service
 @Transactional
-public class OptionsServiceImpl extends ServiceImpl<OptionsMapper,Options> implements OptionsService {
+public class PowerServiceImpl extends ServiceImpl<PowerMapper,Power> implements PowerService {
 
-    private  static final Logger logger = LoggerFactory.getLogger(OptionsServiceImpl.class);
+    private  static final Logger logger = LoggerFactory.getLogger(PowerServiceImpl.class);
 
     @Autowired
-    private OptionsMapper optionsMapper;
+    private PowerMapper optionsMapper;
 
     @Override
-    public List<Options> selectoptions(String logInfo) {
+    public List<Power> selectoptions(String logInfo) {
         logger.info(logInfo+"-开始查询数据");
         return optionsMapper.selectoptions();
     }

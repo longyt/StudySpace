@@ -139,7 +139,7 @@
         background-color: #f1e6ef;
         float: left;
         margin-left: 1px;
-        margin-top: 6px;
+        margin-top: 15px;
     }
 
     .content {
@@ -155,7 +155,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-            url: "/options/list.action",
+            url: "/power/list.action",
             dataType: "json",
             success: function (data) {
                 console.log(data.options);
@@ -176,7 +176,7 @@
             }
         });
         $("#iframe").onload = IframeLoad;
-        $("#iframe")[0].src="/page/home.html";
+        $("#iframe")[0].src="/page/home.jsp";
         $("#iframe").height($(window).height());
         $("#nav-content").height( $(window).height());
 
@@ -200,7 +200,11 @@
             document.getElementById("breadcrumb_" + id).setAttribute("class", "tab-font");
         }
         //跳转页面
-        $("#iframe").attr("src",Src);
+        if(Src=="undefined"){
+            $("#iframe").attr("src","page/error.jsp");
+        }else{
+            $("#iframe").attr("src",Src);
+        }
     }
 
 

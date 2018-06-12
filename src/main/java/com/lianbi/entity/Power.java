@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import java.util.Date;
 
 @TableName(value = "options")
-public class Options {
+public class Power {
 
     private String optionsID;
 
