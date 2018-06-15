@@ -5,9 +5,13 @@ import com.lianbi.entity.Power;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface PowerMapper extends BaseMapper<Power> {
 
     List<Power> selectoptions();
+
+    List<Power> selectpower();
 
 }

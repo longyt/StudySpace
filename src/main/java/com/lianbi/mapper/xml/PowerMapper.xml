@@ -13,4 +13,17 @@
             OptionUpdateDate
             from options
     </select>
+
+    <select id="selectpower" resultType="com.lianbi.entity.Power">
+         SELECT
+            OptionsID,
+            OptionsName,
+            OptionsPid,
+            OptionsSrc,
+            OptionCreatePer,
+            OptionUpdatePer,
+            OptionCreateDate,
+            OptionUpdateDate
+            from options
+    </select>
 </mapper>
