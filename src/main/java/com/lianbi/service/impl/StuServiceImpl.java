@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StuServiceImpl extends ServiceImpl<StuMapper,StuEntity> implements StuService  {
+public class StuServiceImpl extends ServiceImpl<StuMapper, StuEntity> implements StuService {
 
     private static final Logger logger = LoggerFactory.getLogger(StuServiceImpl.class);
 
-    private static final Integer IMPORT_COUNT=1000;
+    private static final Integer IMPORT_COUNT = 1000;
 
-    private static final String NAMESPACE="com.lianbi.mapper.StuMapper";
+    private static final String NAMESPACE = "com.lianbi.mapper.StuMapper";
 
     @Autowired
     StuMapper stuMapper;
@@ -37,29 +37,29 @@ public class StuServiceImpl extends ServiceImpl<StuMapper,StuEntity> implements 
     }
 
 
-    public void InportExcel(@Param("list") List<StuEntity> StuList){
+    public void InportExcel(@Param("list") List<StuEntity> StuList) {
         SqlSession sqlSession = null;
         try {
             sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
-            int count=StuList.size()/IMPORT_COUNT;
-            int allcount=0;
+            int count = StuList.size() / IMPORT_COUNT;
+            int allcount = 0;
             logger.info("开始导入");
-            for (int i=0;i<count;i++){
-                allcount = (i+1)*IMPORT_COUNT;
-                sqlSession.insert("com.lianbi.mapper.StuMapper.InsertDate",StuList.subList((i*IMPORT_COUNT),allcount));
+            for (int i = 0; i < count; i++) {
+                allcount = (i + 1) * IMPORT_COUNT;
+                sqlSession.insert("com.lianbi.mapper.StuMapper.InsertDate", StuList.subList((i * IMPORT_COUNT), allcount));
                 sqlSession.commit();
             }
-            if(allcount<StuList.size()){
+            if (allcount < StuList.size()) {
                 logger.info("我在这里");
-                logger.info(JSON.toJSONString(StuList.subList(allcount,StuList.size())));
-                int insert = sqlSession.insert("com.lianbi.mapper.StuMapper.InsertDate",   StuList.subList(allcount, StuList.size()));
+                logger.info(JSON.toJSONString(StuList.subList(allcount, StuList.size())));
+                int insert = sqlSession.insert("com.lianbi.mapper.StuMapper.InsertDate", StuList.subList(allcount, StuList.size()));
                 logger.info(String.valueOf(insert));
                 //logger.info(JSON.toJSONString(StuList.subList(allcount,StuList.size())));
                 sqlSession.commit();
             }
             logger.info("导入完成");
-        }finally {
-            if(sqlSession!=null){
+        } finally {
+            if (sqlSession != null) {
                 sqlSession.close();
             }
         }

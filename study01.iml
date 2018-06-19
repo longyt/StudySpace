@@ -30,9 +30,9 @@
             <entry key="com.zeroturnaround.jrebel.remoting.DeleteUnindexedFiles" value="true" />
             <entry key="com.zeroturnaround.jrebel.remoting.ModuleRemoteServerPreviousEnabledSelection" value="instance" />
             <entry key="com.zeroturnaround.jrebel.remoting.ModuleRemoteServerSelection" value="instance" />
+            <entry key="lastExternalPluginCheckTime" value="1529372235556" />
           </map>
         </option>
-        <option name="manualXML" value="false" />
         <option name="masterModuleName" />
         <option name="overrideStandardXmlFolder" value="false" />
         <option name="remotingEnabled" value="false" />

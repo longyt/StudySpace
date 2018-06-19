@@ -2,10 +2,11 @@ package com.lianbi.entity;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @TableName(value = "options")
-public class Power {
+public class Power implements Serializable {
 
     private String optionsID;
 
