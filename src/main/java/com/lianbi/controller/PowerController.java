@@ -46,22 +46,22 @@ public class PowerController {
 
     @ResponseBody
     @RequestMapping("/powerlist.action")
-    public ModelMap select(@RequestParam(value = "currentSelPage", defaultValue = "1") String currentSelPage, @RequestParam(value = "PageNum", defaultValue = "5") String PageNum) {
+    public ModelMap select(@RequestParam(value = "currentSelPage", defaultValue = "1") String currentSelPage, @RequestParam(value = "PageNum", defaultValue = "5") String PageNum,Power SearchPower) {
+        logger.info("----------"+JSON.toJSONString(SearchPower.getOptionsID()));
         String logInfo = "权限管理";
         logger.info("currentSelPage=  " + currentSelPage + "  PageNum=   " + PageNum);
         ModelMap modelMap = new ModelMap();
         Map<String, String> params = new HashMap<>();
-        if (currentSelPage == null) {
+        if (currentSelPage == null || PageNum == null) {
             logger.info(logInfo + "-currentSelPage 参数为空");
             modelMap.put("resCode", "00003");
             modelMap.put("resMsg", "-- 参数为空");
             return modelMap;
         }
-        if (PageNum == null) {
-            logger.info(logInfo + "-currentSelPage 参数为空");
-            modelMap.put("resCode", "00003");
-            modelMap.put("resMsg", "--参数为空");
-            return modelMap;
+        if(SearchPower!=null){
+            params.put("optionsID",SearchPower.getOptionsID());
+            params.put("optionsName",SearchPower.getOptionsName());
+            params.put("parentName",SearchPower.getParentName());
         }
         params.put("currentSelPage", currentSelPage);
         params.put("PageNum", PageNum);

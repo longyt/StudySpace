@@ -14,19 +14,28 @@
             from options
     </select>
 
-    <select id="selectpower" resultType="com.lianbi.entity.Power">
-         SELECT
-            OptionsID,
-            OptionsName,
-            OptionsPid,
-            ParentName,
-            OptionsSrc,
-            OptionCreatePer,
-            OptionUpdatePer,
-            OptionCreateDate,
-            OptionUpdateDate,
-            (select OptionsName from options s where o.OptionsPid=s.OptionsID) ParentName
-            from options o where 1=1
+    <select id="selectpower" resultType="com.lianbi.entity.Power" parameterType="java.util.Map">
+        SELECT
+        OptionsID,
+        OptionsName,
+        OptionsPid,
+        ParentName,
+        OptionsSrc,
+        OptionCreatePer,
+        OptionUpdatePer,
+        OptionCreateDate,
+        OptionUpdateDate,
+        (select OptionsName from options s where o.OptionsPid=s.OptionsID) ParentName
+        from options o where 1=1
+        <if test="optionsID!=null">
+            and optionsID=#{optionsID , jdbcType=VARCHAR}
+        </if>
+        <if test="optionsName!=null">
+            and optionsName=#{optionsName , jdbcType=VARCHAR}
+        </if>
+        <if test="parentName!=null">
+            and parentName=#{parentName , jdbcType=VARCHAR}
+        </if>
     </select>
 
     <select id="selectPowerById" parameterType="java.util.Map" resultType="com.lianbi.entity.Power">
@@ -37,7 +46,7 @@
         select * from options where OptionsPid=0;
     </select>
 
-    <update id="updatePower" parameterType="com.lianbi.entity.Power" >
+    <update id="updatePower" parameterType="com.lianbi.entity.Power">
         update options
         <set>
             <if test="optionsName!=null">

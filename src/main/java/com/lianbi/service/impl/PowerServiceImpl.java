@@ -36,12 +36,16 @@ public class PowerServiceImpl extends ServiceImpl<PowerMapper, Power> implements
         logger.info(logInfo + "-开始查询数据");
 
         Map<String, String> vo = new HashMap<>();
+
+        List<Power> selectpower = optionsMapper.selectpower(params);
         String start = String.valueOf((Integer.parseInt(params.get("currentSelPage")) - 1) * Integer.parseInt(params.get("PageNum")));
         String end = String.valueOf(Integer.parseInt(params.get("currentSelPage")) * Integer.parseInt(params.get("PageNum")));
         vo.put("start", start);
-        vo.put("end", end);
-        List<Power> selectpower = optionsMapper.selectpower();
-
+        if(Integer.parseInt(end)>selectpower.size()){
+            vo.put("end",String .valueOf(selectpower.size()));
+        }else{
+            vo.put("end", end);
+        }
         Map<String, Object> result = new HashMap<>();
         result.put("resCode", "00001");
         if (selectpower == null) {

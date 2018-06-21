@@ -20,13 +20,32 @@
             <div class="span12">
                 <div class="widget-box">
                     <div class="widget-content" style="padding-top:0px">
-                        <form id="permForm" method="post"
-                              action="">
-                            <div class="row-fluid">
-
-
+                        <div class="row-fluid">
+                            <div class="new_span3 ">
+                                <div class=" form-control">权限ID：</div>
+                                <input type="text" ng-model="SearchPower.optionsID" class="form-control" value=""/>
                             </div>
-                        </form>
+
+                            <div class="new_span3">
+                                <div class=" form-control">权限名字：</div>
+                                <input type="text" ng-model="SearchPower.optionsName" class="form-control" value=""/>
+                            </div>
+
+                            <div class="new_span3">
+                                <div class=" form-control">父级权限：</div>
+                                <input type="text" ng-model="SearchPower.parentName" class="form-control" value=""/>
+                            </div>
+
+                            <div class="new_span3">
+                                <div>
+                                    <button class="form-control btn btn-default" ng-click="MySeachPower()">查询</button>
+                                </div>
+                                <div>
+                                    <button class="form-control btn btn-default">增加</button>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
                     <table class="table table-striped table-bordered table-hover">
@@ -57,7 +76,9 @@
                             <td>{{item.optionCreateDate}}</td>
                             <td>{{item.optionUpdateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                             <td>
-                                <button ng-click="selectPowerById(item.optionsID)" data-toggle="modal"  class=" btn btn-warning">修改</button>
+                                <button ng-click="selectPowerById(item.optionsID)" data-toggle="modal"
+                                        class=" btn btn-warning">修改
+                                </button>
                                 <button class=" btn btn-danger">删除</button>
                             </td>
                         </tr>
@@ -94,31 +115,39 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
                                     <h4 class="modal-title" id="myModalLabel">权限-修改</h4>
                                 </div>
                                 <div class="modal-body">
-                                        <form id="Myform">
-                                            <div class="form-group form-inline">
-                                                <label>权限名称</label>
-                                                <input type="text" ng-model="power.optionsName" value="{{power.optionsName}}" class="form-control"/>
-                                            </div>
-                                            <div class="form-group form-inline">
-                                                <label>权限URl</label>
-                                                <input type="text" ng-model="power.optionsSrc" value="{{power.optionsSrc=undefined?'':power.optionsSrc}}" class="form-control"/>
-                                            </div>
-                                            <div class="form-group form-inline">
-                                                <label>父级权限</label>
-                                                <select class="form-control" ng-model="power.optionsPid">
-                                                    <option value=" ">选择</option>
-                                                    <option value="{{item.optionsID}}" ng-selected="item.optionsID==power.optionsPid" ng-repeat="item in parentPower">{{item.optionsName}}</option>
-                                                </select>
-                                            </div>
-                                        </form>
+                                    <form id="Myform">
+                                        <div class="form-group form-inline">
+                                            <label>权限名称</label>
+                                            <input type="text" ng-model="power.optionsName"
+                                                   value="{{power.optionsName}}" class="form-control"/>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <label>权限URl</label>
+                                            <input type="text" ng-model="power.optionsSrc"
+                                                   value="{{power.optionsSrc=undefined?'':power.optionsSrc}}"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <label>父级权限</label>
+                                            <select class="form-control" ng-model="power.optionsPid">
+                                                <option value=" ">选择</option>
+                                                <option value="{{item.optionsID}}"
+                                                        ng-selected="item.optionsID==power.optionsPid"
+                                                        ng-repeat="item in parentPower">{{item.optionsName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="button" ng-click="saveUpdatePower()" class="btn btn-primary">保存</button>
+                                    <button type="button" ng-click="saveUpdatePower()" class="btn btn-primary">保存
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -134,17 +163,36 @@
     .pagination li {
         cursor: pointer;
     }
+
     .table tr td {
         text-align: center;
     }
+
+    .table {
+        margin-top: 30px;
+    }
+
     #Myform div label {
         width: 20%;
     }
+
     #Myform div input {
         width: 40%;
     }
+
     #Myform div select {
         width: 40%;
+    }
+
+    .new_span3 div {
+        width: 6%;
+        float: left;
+        margin-left: 22px;
+    }
+
+    .new_span3 input {
+        width: 10%;
+        float: left;
     }
 </style>
 <script type="text/javascript">
@@ -155,8 +203,9 @@
         $scope.PageNum = 5;
         $scope.SelectPageList = [5, 10, 15, 20, 25, 30];//Select 选项 遍历
 
-        $scope.parentPower=[];
-        $scope.power={};
+        $scope.parentPower = [];
+        $scope.power = {};
+        $scope.SearchPower = {};//查询条件对象
         //查询数据
         var URL = "/power/powerlist.action";
         var config = {
@@ -170,11 +219,10 @@
             }
         };
         $scope.Search = function (CurrentPage, PageNum) {
-            console.log(CurrentPage + "---" + PageNum);
-            $http.post(URL, {
-                currentSelPage: CurrentPage,
-                PageNum: PageNum
-            }, config).then(function successCallback(data) {
+            $scope.SearchPower.currentSelPage = CurrentPage;
+            $scope.SearchPower.PageNum = PageNum;
+            console.log(CurrentPage + "---" + PageNum + "-----" + JSON.stringify($scope.SearchPower));
+            $http.post(URL, $scope.SearchPower, config).then(function successCallback(data) {
                 //中心数据
                 $scope.powerLists = data.data.powerList;
                 //分页展示
@@ -235,29 +283,36 @@
         };
         //修改个人权限
         $scope.selectPowerById = function (id) {
-            $http.post("/power/selPowerById.action",{optionsID:id},config).then(
+            $http.post("/power/selPowerById.action", {optionsID: id}, config).then(
                 function success(value) {
-                        console.log(value);
-                        $scope.power=value.data.power;
-                        $scope.parentPower=value.data.parentPower;
+                    console.log(value);
+                    $scope.power = value.data.power;
+                    $scope.parentPower = value.data.parentPower;
                 }
             );
             $("#myModal").modal("show");
         };
         $scope.saveUpdatePower = function () {
-            $http.post("/power/updatePower.action",{optionsName:$scope.power.optionsName,optionsSrc:$scope.power.optionsSrc,optionsPid:$scope.power.optionsPid,optionsID:$scope.power.optionsID},config).then(
+            $http.post("/power/updatePower.action", {
+                optionsName: $scope.power.optionsName,
+                optionsSrc: $scope.power.optionsSrc,
+                optionsPid: $scope.power.optionsPid,
+                optionsID: $scope.power.optionsID
+            }, config).then(
                 function success(value) {
                     console.log(value);
-                    if(value.data.resCode=="00000"){
+                    if (value.data.resCode == "00000") {
                         $("#myModal").modal("hide");
                         $scope.Search($scope.currentSelPage, $scope.PageNum);
-                    }else{
+                    } else {
                         $("#myModal").modal("hide");
                         alert(" 修改失败 ");
                     }
                 }
             );
-
+        };
+        $scope.MySeachPower = function () {
+            $scope.Search($scope.currentSelPage, $scope.PageNum);
         }
     }])
 </script>

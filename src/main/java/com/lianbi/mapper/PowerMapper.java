@@ -12,7 +12,7 @@ public interface PowerMapper extends BaseMapper<Power> {
 
     List<Power> selectoptions();
 
-    List<Power> selectpower();
+    List<Power> selectpower(Map<String ,String > params);
 
     Power selectPowerById(Map<String ,String > params);
 
