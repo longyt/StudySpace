@@ -23,7 +23,16 @@
             OptionCreatePer,
             OptionUpdatePer,
             OptionCreateDate,
-            OptionUpdateDate
-            from options
+            OptionUpdateDate,
+            (select OptionsName from options s where o.OptionsPid=s.OptionsID) ParentName
+            from options o where 1=1
+    </select>
+
+    <select id="selectPowerById" parameterType="java.util.Map" resultType="com.lianbi.entity.Power">
+        select * from options where OptionsID=#{optionsID}
+    </select>
+
+    <select id="selectParentPower" parameterType="java.util.Map" resultType="com.lianbi.entity.Power">
+        select * from options where OptionsPid=0;
     </select>
 </mapper>

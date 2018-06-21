@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,13 +54,13 @@ public class PowerController {
         if (currentSelPage == null) {
             logger.info(logInfo + "-currentSelPage 参数为空");
             modelMap.put("resCode", "00003");
-            modelMap.put("resMsg", "参数为空");
+            modelMap.put("resMsg", "-- 参数为空");
             return modelMap;
         }
         if (PageNum == null) {
             logger.info(logInfo + "-currentSelPage 参数为空");
             modelMap.put("resCode", "00003");
-            modelMap.put("resMsg", "参数为空");
+            modelMap.put("resMsg", "--参数为空");
             return modelMap;
         }
         params.put("currentSelPage", currentSelPage);
@@ -84,9 +85,40 @@ public class PowerController {
         return modelMap;
     }
 
-    @RequestMapping("/test.action")
-    public void test() {
-        logger.info("成功了 yes");
+
+    @ResponseBody
+    @RequestMapping("/selPowerById.action")
+    public ModelMap selectPowerById(String optionsID) {
+        String logInfo = "查询个人权限";
+        ModelMap modelMap = new ModelMap();
+        modelMap.put("resCode", "00001");
+        if (StringUtils.isEmpty(optionsID)) {
+            modelMap.put("resCode", "00003");
+            modelMap.put("resMsg", "参数为空");
+            logger.info(logInfo + "参数为空");
+            return modelMap;
+        }
+        Map<String, String> params = new HashMap<>();
+        params.put("optionsID", optionsID);
+        ModelMap result = powerService.selectPowerById(logInfo, params);
+        if (result.get("resCode") != "00000") {
+            modelMap.put("resCode", result.get("resCode"));
+            modelMap.put("resMsg", result.get("resMsg"));
+            logger.info(logInfo + result.get("resMsg"));
+            return modelMap;
+        }
+        modelMap.put("resCode", "00000");
+        modelMap.put("power", result.get("power"));
+        modelMap.put("parentPower", result.get("parentPower"));
+        logger.info(logInfo + "-查询数据成功");
+        return modelMap;
+    }
+
+    @RequestMapping("/updatePower.action")
+    public ModelMap updatePower(Power power) {
+        logger.info(power.getOptionsID() + "---" + power.getOptionsName() + "----" + power.getOptionsPid() + "--" + power.getOptionsSrc());
+
+        return null;
     }
 
 

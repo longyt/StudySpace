@@ -14,6 +14,8 @@ public class Power implements Serializable {
 
     private String optionsPid;
 
+    private String parentName;
+
     private String optionsSrc;
 
     private String optionCreatePer;
@@ -87,5 +89,13 @@ public class Power implements Serializable {
 
     public void setOptionUpdateDate(Date optionUpdateDate) {
         this.optionUpdateDate = optionUpdateDate;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 }

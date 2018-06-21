@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +55,32 @@ public class PowerServiceImpl extends ServiceImpl<PowerMapper, Power> implements
         logger.info(logInfo + "查询完毕");
         return result;
     }
+
+    @Override
+    public ModelMap selectPowerById(String logInfo, Map<String, String> params) {
+        logger.info(logInfo+"-查询数据");
+        ModelMap modelMap=new ModelMap();
+        modelMap.put("resCode","00001");
+        Power power = optionsMapper.selectPowerById(params);
+        if(power==null){
+            modelMap.put("resCode","00003");
+            modelMap.put("resMsg","用户不存在");
+            logger.info(logInfo+"-用户不存在");
+            return modelMap;
+        }
+        List<Power> parentPower = optionsMapper.selectParentPower(params);
+        if(parentPower==null){
+            modelMap.put("resCode","00003");
+            modelMap.put("resMsg","父级用户不存在");
+            logger.info(logInfo+"-父级用户不存在");
+            return modelMap;
+        }
+        modelMap.put("resCode","00000");
+        modelMap.put("power",power);
+        modelMap.put("parentPower",parentPower);
+        return modelMap;
+    }
+
 
 
 }

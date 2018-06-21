@@ -24,7 +24,6 @@
                     method:"POST",
                     success:function (data) {
                             console.log(data.resMsg);
-
                     }
                 });
             })

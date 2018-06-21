@@ -10,7 +10,6 @@
     <script src="/plugs/angular/angular-route.min.js" type="text/javascript"></script>
     <script src="/plugs/angular/angular-ui-router.js" type="text/javascript"></script>
     <script src="/plugs/bootstarp/bootstrap.min.js" type="text/javascript"></script>
-    <script src="/test/indexcontroller.js" type="text/javascript"></script>
 </head>
 <body class="body-style">
 <div>
