@@ -114,11 +114,27 @@ public class PowerController {
         return modelMap;
     }
 
+    @ResponseBody
     @RequestMapping("/updatePower.action")
     public ModelMap updatePower(Power power) {
-        logger.info(power.getOptionsID() + "---" + power.getOptionsName() + "----" + power.getOptionsPid() + "--" + power.getOptionsSrc());
-
-        return null;
+        String logInfo = "修改权限";
+        ModelMap modelMap = new ModelMap();
+        modelMap.put("resCode", "00001");
+        if (power.getOptionsID() == null || power.getOptionsName() == null || power.getOptionsPid() == null || power.getOptionsSrc() == null) {
+            modelMap.put("resCode", "00003");
+            modelMap.put("resMsg", logInfo + "-参数为空");
+            return modelMap;
+        }
+        ModelMap result = powerService.updatePower(logInfo, power);
+        if (result.get("resCode") != "00000") {
+            modelMap.put("resCode", "00003");
+            modelMap.put("resMsg", logInfo + "-操作失败");
+            return modelMap;
+        }
+        modelMap.put("resCode", "00000");
+        modelMap.put("resMsg", logInfo + "-权限修改成功");
+        logger.info(logInfo + "-权限修改成功");
+        return modelMap;
     }
 
 

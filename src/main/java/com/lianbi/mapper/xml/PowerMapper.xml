@@ -19,6 +19,7 @@
             OptionsID,
             OptionsName,
             OptionsPid,
+            ParentName,
             OptionsSrc,
             OptionCreatePer,
             OptionUpdatePer,
@@ -35,4 +36,35 @@
     <select id="selectParentPower" parameterType="java.util.Map" resultType="com.lianbi.entity.Power">
         select * from options where OptionsPid=0;
     </select>
+
+    <update id="updatePower" parameterType="com.lianbi.entity.Power" >
+        update options
+        <set>
+            <if test="optionsName!=null">
+                OptionsName=#{optionsName, jdbcType=VARCHAR},
+            </if>
+            <if test="optionsPid!=null">
+                OptionsPid=#{optionsPid, jdbcType=VARCHAR},
+            </if>
+            <if test="parentName!=null">
+                ParentName=#{parentName, jdbcType=VARCHAR},
+            </if>
+            <if test="optionsSrc!=null">
+                OptionsSrc=#{optionsSrc, jdbcType=VARCHAR},
+            </if>
+            <if test="optionCreatePer!=null">
+                OptionCreatePer=#{optionCreatePer, jdbcType=VARCHAR},
+            </if>
+            <if test="optionUpdatePer!=null">
+                OptionUpdatePer=#{optionUpdatePer, jdbcType=VARCHAR},
+            </if>
+            <if test="optionCreateDate!=null">
+                OptionCreateDate=#{optionCreateDate, jdbcType=VARCHAR},
+            </if>
+            <if test="optionUpdateDate!=null">
+                OptionUpdateDate=#{optionUpdateDate,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where OptionsID=#{optionsID, jdbcType=VARCHAR}
+    </update>
 </mapper>

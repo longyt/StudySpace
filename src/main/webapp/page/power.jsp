@@ -55,7 +55,7 @@
                             <td>{{item.optionCreatePer}}</td>
                             <td>{{item.optionUpdatePer}}</td>
                             <td>{{item.optionCreateDate}}</td>
-                            <td>{{item.optionUpdateDate}}</td>
+                            <td>{{item.optionUpdateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                             <td>
                                 <button ng-click="selectPowerById(item.optionsID)" data-toggle="modal"  class=" btn btn-warning">修改</button>
                                 <button class=" btn btn-danger">删除</button>
@@ -105,7 +105,7 @@
                                             </div>
                                             <div class="form-group form-inline">
                                                 <label>权限URl</label>
-                                                <input type="text" ng-model="power.optionsSrc" value="{{power.optionsSrc}}" class="form-control"/>
+                                                <input type="text" ng-model="power.optionsSrc" value="{{power.optionsSrc=undefined?'':power.optionsSrc}}" class="form-control"/>
                                             </div>
                                             <div class="form-group form-inline">
                                                 <label>父级权限</label>
@@ -245,13 +245,19 @@
             $("#myModal").modal("show");
         };
         $scope.saveUpdatePower = function () {
-                console.log($scope.power);
             $http.post("/power/updatePower.action",{optionsName:$scope.power.optionsName,optionsSrc:$scope.power.optionsSrc,optionsPid:$scope.power.optionsPid,optionsID:$scope.power.optionsID},config).then(
                 function success(value) {
-
+                    console.log(value);
+                    if(value.data.resCode=="00000"){
+                        $("#myModal").modal("hide");
+                        $scope.Search($scope.currentSelPage, $scope.PageNum);
+                    }else{
+                        $("#myModal").modal("hide");
+                        alert(" 修改失败 ");
+                    }
                 }
             );
-            $("#myModal").modal("show");
+
         }
     }])
 </script>

@@ -14,4 +14,5 @@ public interface PowerService extends IService<Power> {
 
     ModelMap selectPowerById (String logInfo, Map<String ,String > params);
 
+    ModelMap updatePower(String logInfo,Power power);
 }

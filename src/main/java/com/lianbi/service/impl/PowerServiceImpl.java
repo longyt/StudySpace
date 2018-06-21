@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,29 +59,60 @@ public class PowerServiceImpl extends ServiceImpl<PowerMapper, Power> implements
 
     @Override
     public ModelMap selectPowerById(String logInfo, Map<String, String> params) {
-        logger.info(logInfo+"-查询数据");
-        ModelMap modelMap=new ModelMap();
-        modelMap.put("resCode","00001");
+        logger.info(logInfo + "-查询数据");
+        ModelMap modelMap = new ModelMap();
+        modelMap.put("resCode", "00001");
         Power power = optionsMapper.selectPowerById(params);
-        if(power==null){
-            modelMap.put("resCode","00003");
-            modelMap.put("resMsg","用户不存在");
-            logger.info(logInfo+"-用户不存在");
+        if (power == null) {
+            modelMap.put("resCode", "00003");
+            modelMap.put("resMsg", "用户不存在");
+            logger.info(logInfo + "-用户不存在");
             return modelMap;
         }
         List<Power> parentPower = optionsMapper.selectParentPower(params);
-        if(parentPower==null){
-            modelMap.put("resCode","00003");
-            modelMap.put("resMsg","父级用户不存在");
-            logger.info(logInfo+"-父级用户不存在");
+        if (parentPower == null) {
+            modelMap.put("resCode", "00003");
+            modelMap.put("resMsg", "父级用户不存在");
+            logger.info(logInfo + "-父级用户不存在");
             return modelMap;
         }
-        modelMap.put("resCode","00000");
-        modelMap.put("power",power);
-        modelMap.put("parentPower",parentPower);
+        modelMap.put("resCode", "00000");
+        modelMap.put("power", power);
+        modelMap.put("parentPower", parentPower);
         return modelMap;
     }
 
+    @Override
+    public ModelMap updatePower(String logInfo, Power power) {
+        logger.info(logInfo + "-权限修改");
+        Map<String, String> params = new HashMap<>();
+        ModelMap modelMap = new ModelMap();
+        modelMap.put("resCode", "00001");
+        params.put("optionsID", power.getOptionsPid());
+        Power power1 = optionsMapper.selectPowerById(params);
+        if (power1 == null && power.getOptionsPid() != "0") {
+            modelMap.put("resCode", "00003");
+            modelMap.put("resMsg", logInfo + "-权限不存在");
+            return modelMap;
+        }
+        Power powerVo = new Power();
+        powerVo.setOptionsID(power.getOptionsID());
+        powerVo.setOptionsName(power.getOptionsName());
+        powerVo.setOptionsPid(power.getOptionsPid());
+        powerVo.setParentName(power1.getOptionsName());
+        powerVo.setOptionsSrc(power.getOptionsSrc());
+        powerVo.setOptionUpdatePer("longyt");
+        powerVo.setOptionUpdateDate(new Date());
+        int i = optionsMapper.updatePower(powerVo);
+        logger.info("---------"+i);
+        if (i <= 0) {
+            modelMap.put("resCode", "00003");
+            modelMap.put("resMsg", logInfo + "-操作失败");
+            return modelMap;
+        }
+        modelMap.put("resCode", "00000");
+        return modelMap;
+    }
 
 
 }

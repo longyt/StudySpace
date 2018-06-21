@@ -17,4 +17,6 @@ public interface PowerMapper extends BaseMapper<Power> {
     Power selectPowerById(Map<String ,String > params);
 
     List<Power> selectParentPower(Map<String ,String > params);
+
+    int updatePower(Power power);
 }
